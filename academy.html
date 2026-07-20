@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>NESO Partner Academy — the 15-minute training</title><style>
+:root{--bg:#faf8f4;--card:#fff;--line:#e5ddd0;--ink:#23272e;--dim:#5c6672;--faint:#98a1ab;--plum:#6d28d9;--gold:#e7b84b;--green:#0e8a6e;--red:#b4453a}
+*{box-sizing:border-box}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);max-width:680px;margin:0 auto;padding:26px 16px 60px;font-size:15px;line-height:1.55}
+h1{font-size:24px;margin:0 0 4px}
+.sub{color:var(--dim);font-size:13.5px;margin:0 0 16px}
+.bar{height:8px;background:#efe9e0;border-radius:99px;overflow:hidden;margin:0 0 18px}
+.bar i{display:block;height:100%;background:var(--plum);transition:width .3s;width:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:14px}
+.mod{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--plum);margin-bottom:4px}
+h2{font-size:18px;margin:0 0 8px}
+.lesson{font-size:14.5px;color:var(--ink)}
+.lesson b{color:var(--plum)}
+.q{font-weight:700;margin:16px 0 8px;font-size:14.5px}
+.opt{display:block;width:100%;text-align:left;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:11px 14px;font-size:14px;font-family:inherit;cursor:pointer;margin-bottom:8px;color:var(--ink)}
+.opt:hover{border-color:var(--plum)}
+.opt.right{border-color:var(--green);background:#e2f3ec;font-weight:700}
+.opt.wrong{border-color:var(--red);background:#fbeae8}
+.why{font-size:12.5px;color:var(--dim);background:var(--bg);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:8px 12px;margin:2px 0 14px;display:none}
+button.next{background:var(--plum);color:#fff;border:none;border-radius:10px;padding:13px 22px;font-weight:700;font-size:15px;cursor:pointer;font-family:inherit;width:100%;margin-top:6px}
+button.next:disabled{opacity:.4;cursor:default}
+.score{font-size:13px;color:var(--dim);text-align:right;margin-bottom:6px}
+.final{text-align:center;padding:30px 20px}
+.final .big{font-size:44px;font-weight:800}
+.final .pass{color:var(--green)}.final .fail{color:var(--red)}
+.cert{border:2.5px solid var(--gold);border-radius:14px;padding:22px;margin:18px 0;background:#fffdf7}
+.cert h3{margin:0 0 4px;font-size:20px}
+.cert .nm{font-size:22px;font-weight:800;color:var(--plum);margin:8px 0}
+input.iname{background:#fff;border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:15px;font-family:inherit;width:100%;max-width:320px;text-align:center}
+.muted{color:var(--faint);font-size:12.5px}
+a{color:var(--plum)}
+@media print{button,.bar,.sub{display:none}}
+</style></head><body>
+<h1>🎓 NESO Partner Academy</h1>
+<p class="sub">Six short modules · 18 questions · ~15 minutes. Pass with 80% and text your completion screen to (662) 382-4084 — a principal will mark you trained.</p>
+<div class="bar"><i id="prog"></i></div>
+<div id="app"></div>
+<script>
+var MODULES=[
+{t:"What NESO is",l:"NESO is a <b>two-principal advisory firm and toolmaker</b> covering two practices: <b>business</b> (plans, grants, research, decks) and <b>real estate &amp; land</b> (feasibility, capital stacks, entitlements, site work). Charles Finkley, MPA leads real estate; Mallory Bailey-Finkley, MBA built the Boundless tools. Money is simple: services are priced in <b>credits — 1 credit = $50</b> — quoted up front, and work starts only after the client approves and pays. Credits stay valid <b>13 weeks</b> (39 weeks on Growth/Partner blocks or the $10 rollover membership). One more house rule you must never get wrong: the phone <b>(662) 382-4084 is TEXT ONLY</b> — we text, we don't take calls.",
+q:[
+{q:"A client asks what a NESO credit is worth. You say:",o:["$25","$50","$100","It depends on the service"],a:1,w:"1 credit = $50, always, across both practices — one balance covers business and real-estate work."},
+{q:"How long are standard credits valid?",o:["4 weeks","13 weeks","6 months","They never expire"],a:1,w:"13 weeks standard; 39 weeks with a Growth/Partner block or the $10 rollover membership. (Weeks, not months.)"},
+{q:"A lead wants to call the NESO number. What do you tell them?",o:["Call after 5pm","Leave a voicemail","Text it — the line is text-only","Call Charles's cell"],a:2,w:"Every NESO surface says 'text us.' The number never takes calls."}]},
+{t:"The free tools",l:"Eight free web tools do the selling for you — each answers one sharp question, free, in minutes. Real estate: <b>ProForma</b> (does the building pay back the loan?), <b>CapStack</b> (how do I finance it — where's the gap?), <b>MarketScope</b> (what's the market like?), <b>BuildBrief</b> (how do I explain my vision to an architect?), <b>SiteShaper</b> (what can I build here? — the flagship). Business: <b>PlanForge</b> (will my idea make money?), <b>MarketFit</b> (is there room for my move?), <b>GrantFit</b> (which funding would I actually win?). Your best opening move with any lead: <b>send the free tool that answers their question</b> — trust first, ask later.",
+q:[
+{q:"A founder wonders if their business idea will actually make money. Which free tool?",o:["CapStack","PlanForge","MarketScope","BuildBrief"],a:1,w:"PlanForge turns nine plain inputs into a monthly model: break-even, runway, margins."},
+{q:"A developer needs to explain their housing vision to an architect for the first time. Send them:",o:["BuildBrief","GrantFit","MarketFit","ProForma"],a:0,w:"BuildBrief produces a Development Intent Brief the professionals understand the first time."},
+{q:"The smartest first move with a new lead is usually:",o:["Quote them a price","Send the free tool that answers their question","Ask for a signed agreement","Book a call"],a:1,w:"Free value first is the whole NESO model — the tools earn trust before any ask."}]},
+{t:"The paid layer",l:"When stakes rise, the money moves in four ways. <b>Tool Pro unlocks</b> ($19–39, Gumroad, single-use code) open deeper models and printable exhibits. <b>SiteShaper</b> runs on its own tiers (Design $199 · Layout Editor $29 · Site Intelligence $169 or $15/mo). <b>Bird's Eye reports</b> are ordered directly: Zoning $495 · Feasibility $750 · Data Audit from $350 — delivered in 2 business days, senior-verified. The <b>Bid Boards membership</b> is $19/mo: free visitors see TN + MS postings (8 max); members see every state on the live board — now 35 public sources.",
+q:[
+{q:"The Bid Boards membership costs:",o:["$9/mo","$19/mo","$49/mo","$199 one-time"],a:1,w:"$19/mo unlocks every state on the live board; free visitors get TN + MS."},
+{q:"A Bird's Eye Zoning report runs:",o:["$50","$199","$495","$1,500"],a:2,w:"Zoning $495 · Feasibility $750 · Data Audit from $350 — 2 business days, senior-verified."},
+{q:"Pro unlocks are delivered as:",o:["A password emailed monthly","A single-use code from Gumroad","A browser extension","A phone call"],a:1,w:"Gumroad checkout issues a single-use code; the neso-pro worker redeems it once, ever."}]},
+{t:"Services & credits",l:"Services follow one flow, always: <b>quote in credits → client approves → client pays → NESO delivers → credits deduct</b>. No work starts on a handshake. Learn one flat item cold: the <b>Bid Proposal at 1 credit ($50)</b> is <b>assembly-only</b> — the buyer supplies the bid documents and ALL their raw content (pricing, quals, forms); NESO checks it against the bid's requirements, formats it, and returns a submission-ready copy in 2–3 days. NESO does <b>not</b> research or create missing content at that price — gaps get flagged, extras get quoted. Bigger asks (grant writing, feasibility, capital stacks, market studies) are quoted per engagement in credits.",
+q:[
+{q:"The $50 Bid Proposal includes:",o:["NESO researching the client's competitors","Assembling and formatting only what the buyer supplies","Registering the buyer with the agency","A guaranteed win"],a:1,w:"Assembly-only: their documents + their content in, professional submission-ready copy out. Research is quoted separately."},
+{q:"When does NESO start service work?",o:["As soon as the client says yes verbally","After the quote is approved AND paid","After delivery","Whenever capacity opens"],a:1,w:"Quote → approve → pay → deliver → deduct. Payment always precedes work."},
+{q:"A buyer's bid package is missing their insurance certificate. NESO will:",o:["Create one for them","Skip it quietly","Flag the gap back to the buyer","Cancel the order"],a:2,w:"Missing pieces are flagged back; NESO never invents or sources content at the flat tier."}]},
+{t:"How you get paid",l:"Two tracks. <b>Affiliates</b> earn a % of revenue NESO actually <b>collects</b> from your referred clients: <b>8%</b> to start → <b>10%</b> after 3 closed wins → <b>12%</b> after 8 wins or $15k referred. <b>Associate Partners</b> work inside deals and earn a % of <b>net</b>, agreed per engagement before work starts: Source &amp; Sell <b>30%</b> · Sell &amp; Shepherd <b>40%</b> · Co-Deliver <b>50%</b>. Both tracks: attribution lasts <b>26 weeks</b> from a client's first engagement, and commissions pay <b>within 2 weeks of NESO collecting</b> — never on quotes, only on cash received. Every payout comes with an itemized statement, and your portal shows the math on every deal.",
+q:[
+{q:"An affiliate's starting rate is:",o:["5% of net","8% of collected revenue","12% of quotes","20% of everything"],a:1,w:"8% of collected revenue, rising to 10% (3 wins) and 12% (8 wins or $15k referred)."},
+{q:"Commissions are paid:",o:["The moment a quote goes out","Within 2 weeks of NESO collecting the client's payment","Quarterly, no exceptions","In credits"],a:1,w:"Cash received first, then your share within 2 weeks. Refunds reverse the matching commission."},
+{q:"An Associate Partner's band (30/40/50 of net) is set:",o:["After the deal closes","In writing, per engagement, before work starts","By the client","Automatically at 40%"],a:1,w:"One line in the quote thread before work begins — no retroactive upgrades."}]},
+{t:"Selling it right",l:"The rules that keep everyone safe: you are an <b>independent referrer</b> — you never quote prices, promise outcomes, or sign anything on NESO's behalf (NESO prices everything). <b>No spam, no misrepresentation, no self-referrals</b>, and clients introduced through NESO can't be taken direct for 52 weeks (partners). Your working motion: share your <b>?ref=CODE link</b> (attribution rides along automatically for 26 weeks) or have leads name you at intake; submit every referral in your <b>portal</b> the day you make the intro; watch status move submitted → qualified → won; request a payout review any time something looks due. When in doubt about scope or price, the answer is always: <i>“Let me connect you with a NESO principal — text (662) 382-4084.”</i>",
+q:[
+{q:"A lead asks you what their capital stack model will cost. You:",o:["Estimate 10 credits to sound helpful","Say NESO prices every engagement and connect them to intake","Promise a discount","Quote last month's price"],a:1,w:"Only NESO quotes. Your job is the introduction; the principal prices the work."},
+{q:"Attribution: a client you referred comes back with a second project 20 weeks after their first engagement. It:",o:["Doesn't count — one deal only","Counts — attribution runs 26 weeks from first engagement","Counts forever","Counts only if they use your link again"],a:1,w:"26 weeks from the client's first engagement, link or named-at-intake alike."},
+{q:"The fastest correct way to log a new intro is:",o:["Text Charles and hope","Submit it in your portal the same day","Wait until it closes","Email a spreadsheet monthly"],a:1,w:"Portal submission the same day is what protects your commission and starts the status trail."}]}
+];
+var mi=0,qi=-1,score=0,answered=false,total=MODULES.reduce(function(a,m){return a+m.q.length;},0),done=0;
+function esc(t){return String(t==null?'':t).replace(/[&<>]/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;'})[c];});}
+function prog(){document.getElementById('prog').style.width=Math.round(100*done/total)+'%';}
+function render(){
+  var app=document.getElementById('app'),m=MODULES[mi];
+  if(!m){finish();return;}
+  var h='<div class="card"><div class="mod">Module '+(mi+1)+' of '+MODULES.length+'</div><h2>'+esc(m.t)+'</h2>';
+  if(qi<0){h+='<div class="lesson">'+m.l+'</div><button class="next" onclick="qi=0;render()">Quiz me →</button>';}
+  else{
+    var Q=m.q[qi];
+    h+='<div class="score">Score '+score+' / '+done+'</div><div class="q">Q'+(qi+1)+'. '+esc(Q.q)+'</div>';
+    for(var i=0;i<Q.o.length;i++)h+='<button class="opt" id="o'+i+'" onclick="pick('+i+')">'+esc(Q.o[i])+'</button>';
+    h+='<div class="why" id="why">'+esc(Q.w)+'</div>';
+    h+='<button class="next" id="nx" disabled onclick="advance()">'+(qi+1<m.q.length?'Next question →':(mi+1<MODULES.length?'Next module →':'See my result →'))+'</button>';
+  }
+  h+='</div>';app.innerHTML=h;prog();window.scrollTo(0,0);answered=false;
+}
+function pick(i){
+  if(answered)return;answered=true;done++;
+  var Q=MODULES[mi].q[qi];
+  if(i===Q.a){score++;document.getElementById('o'+i).className='opt right';}
+  else{document.getElementById('o'+i).className='opt wrong';document.getElementById('o'+Q.a).className='opt right';}
+  document.getElementById('why').style.display='block';
+  document.getElementById('nx').disabled=false;prog();
+}
+function advance(){
+  qi++;
+  if(qi>=MODULES[mi].q.length){mi++;qi=-1;}
+  render();
+}
+function finish(){
+  var pct=Math.round(100*score/total),pass=pct>=80;
+  document.getElementById('app').innerHTML='<div class="card final">'
+    +'<div class="big '+(pass?'pass':'fail')+'">'+pct+'%</div>'
+    +'<p><b>'+score+' of '+total+'</b> correct.</p>'
+    +(pass
+      ?'<div class="cert"><h3>✦ NESO Partner Academy</h3><div class="muted">Certificate of completion</div>'
+       +'<div class="nm" id="cname">Your name</div>'
+       +'<input class="iname" placeholder="Type your name" oninput="document.getElementById(\'cname\').textContent=this.value||\'Your name\'">'
+       +'<div class="muted" style="margin-top:10px">Completed '+new Date().toLocaleDateString()+' · Score '+pct+'%</div></div>'
+       +'<p><b>Last step:</b> screenshot this certificate and text it to <a href="sms:+16623824084">(662) 382-4084</a> — a NESO principal marks you trained and your portal goes fully live.</p>'
+      :'<p>80% passes. Skim the modules once more — the answers are all in the lessons — and run it again.</p>')
+    +'<button class="next" onclick="mi=0;qi=-1;score=0;done=0;render()">'+(pass?'Take it again for fun':'Retake the course')+'</button>'
+    +'</div>';
+  document.getElementById('prog').style.width='100%';
+}
+render();
+</script></body></html>
