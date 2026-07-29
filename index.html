@@ -60,7 +60,23 @@ h1{font-family:Fraunces,serif;font-size:clamp(28px,5vw,42px);line-height:1.08;ma
 .q p{font-size:13.5px;color:var(--dim)}
 footer{border-top:1px solid var(--line);padding:18px 0 30px;font-size:12.5px;color:var(--faint)}
 @media print{.cta{background:#5B2A86!important;-webkit-print-color-adjust:exact}}
-</style></head><body>
+
+.routes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:20px 0 6px;text-align:left}
+.route{display:flex;flex-direction:column;gap:6px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:16px 18px;text-decoration:none;color:inherit;transition:.16s}
+.route:hover{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.4);transform:translateY(-2px)}
+.route .rk{font-family:var(--mono,ui-monospace,monospace);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.75}
+.route .rt{font-size:17px;font-weight:700;line-height:1.25}
+.route .rd{font-size:13px;line-height:1.5;opacity:.82}
+.route .rgo{margin-top:6px;font-size:13.5px;font-weight:700;text-decoration:underline}
+.ctafall{font-size:13px;line-height:1.6;opacity:.8;margin-top:16px}
+.ctafall a{color:inherit;font-weight:700}
+</style><!-- neso-partners-page v5 · 29 July 2026
+     v5: "Start the conversation" replaced with three route cards that ask which track the
+     person wants, each linking to neso-partners /apply with a ?track= parameter. The v4
+     "Use the form" button pointed at /form/intake, which is the CLIENT project intake form —
+     a recruit filling it in landed in the review queue as a client enquiry, not a partner
+     application. Text and email fallbacks kept, with the desktop note v4 added. -->
+</head><body>
 
 <header><div class="wrap">
 <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2224%22%20fill%3D%22%23160f1e%22/%3E%3Cpath%20d%3D%22M10%2050%20L50%2044%20L90%2050%20L50%2056%20Z%22%20fill%3D%22%235B2A86%22/%3E%3Cpath%20d%3D%22M50%2010%20L56%2050%20L50%2090%20L44%2050%20Z%22%20fill%3D%22%23E7B84B%22/%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%226%22%20fill%3D%22%23f2ecf7%22/%3E%3C/svg%3E" alt="NESO">
@@ -116,12 +132,31 @@ footer{border-top:1px solid var(--line);padding:18px 0 30px;font-size:12.5px;col
 </div>
 
 <div class="cta">
-<h2>Start the conversation</h2>
-<p>Tell us who you are and who you know. Whether you're a one-introduction affiliate or a carry-the-deal partner, the terms are on the table before you commit anything.</p>
-<a class="btn" href="sms:+19012950322?&body=Hi%20NESO%20%E2%80%94%20I%27m%20interested%20in%20the%20affiliate%2Fpartner%20program.%20My%20name%20is%20">Text us to start →</a>
-<a class="btn g" href="mailto:hello@nesohq.com?subject=Affiliate%20%2F%20Associate%20Partner%20inquiry&body=Hi%20NESO%20%E2%80%94%20I%27m%20interested%20in%3A%20(Affiliate%20%2F%20Associate%20Partner)%0AMy%20background%3A%20%0AMy%20network%3A%20">Email instead</a>
-<a class="btn g" href="https://neso-queue.nesoai-us.workers.dev/form/intake?track=all&source=partners">Use the form</a>
-<p style="margin-top:14px;font-size:13px;color:#d9c7ec">Buttons not opening anything? On a desktop the text and email links need an app to hand off to. Text <b style="color:#fff">(901) 295-0322</b> or email <b style="color:#fff">hello@nesohq.com</b> directly — or use the form above.</p>
+<h2>Pick your route</h2>
+<p>Tell us who you are and who you know. Whether you're a one-introduction affiliate or a carry-the-deal partner, the terms are on the table before you commit anything. Choose the track that fits — the application takes about three minutes.</p>
+
+<div class="routes">
+  <a class="route" href="https://neso-partners.nesoai-us.workers.dev/apply?track=affiliate">
+    <span class="rk">Affiliate</span>
+    <span class="rt">I’ll make introductions</span>
+    <span class="rd">8% &rarr; 10% &rarr; 12% of collected revenue, plus 20% on Pro tools and 10% on SiteShaper paid by Gumroad. You introduce; we do everything else.</span>
+    <span class="rgo">Apply as an affiliate &rarr;</span>
+  </a>
+  <a class="route" href="https://neso-partners.nesoai-us.workers.dev/apply?track=partner">
+    <span class="rk">Associate Partner</span>
+    <span class="rt">I’ll source, sell, or carry the deal</span>
+    <span class="rd">30% / 40% / 50% of net per engagement, by how far you carry it. For business-development people who qualify, sell, and stay in through delivery.</span>
+    <span class="rgo">Apply as a partner &rarr;</span>
+  </a>
+  <a class="route" href="https://neso-partners.nesoai-us.workers.dev/apply?track=undecided">
+    <span class="rk">Not sure yet</span>
+    <span class="rt">Talk it through first</span>
+    <span class="rd">You can do both, and the band is per engagement. Tell us about your network and a principal will say which track actually fits.</span>
+    <span class="rgo">Start a conversation &rarr;</span>
+  </a>
+</div>
+
+<p class="ctafall">Prefer not to use a form? Text <a href="sms:+19012950322?&body=Hi%20NESO%20%E2%80%94%20I%27m%20interested%20in%20the%20affiliate%2Fpartner%20program.%20My%20name%20is%20">(901) 295-0322</a> or email <a href="mailto:hello@nesohq.com?subject=Affiliate%20%2F%20Associate%20Partner%20inquiry&body=Hi%20NESO%20%E2%80%94%20I%27m%20interested%20in%3A%20(Affiliate%20%2F%20Associate%20Partner)%0AMy%20background%3A%20%0AMy%20network%3A%20">hello@nesohq.com</a> directly. On a desktop those links need a mail or messaging app to hand off to — if nothing opens, the addresses above are the whole message.</p>
 </div>
 
 <div class="faq">
