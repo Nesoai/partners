@@ -32,11 +32,18 @@ button.next:disabled{opacity:.4;cursor:default}
 .cert .nm{font-size:22px;font-weight:800;color:var(--plum);margin:8px 0}
 input.iname{background:#fff;border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:15px;font-family:inherit;width:100%;max-width:320px;text-align:center}
 .muted{color:var(--faint);font-size:12.5px}
+.send{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:16px 0;text-align:left}
+.send label{display:block;font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);margin:10px 0 4px}
+.send input{background:#fff;border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:14.5px;font-family:inherit;width:100%}
+.send .msg{margin-top:10px;font-size:13px;border-radius:9px;padding:9px 12px;display:none}
+.send .msg.ok{display:block;background:#e2f3ec;border:1px solid #bfe6d6;color:var(--green)}
+.send .msg.warn{display:block;background:#fffdf7;border:1px solid var(--gold);color:var(--ink)}
+.send .msg a{color:var(--plum);font-weight:700}
 a{color:var(--plum)}
 @media print{button,.bar,.sub{display:none}}
 </style></head><body>
 <h1>🎓 NESO Partner Academy</h1>
-<p class="sub">Six short modules · 18 questions · ~15 minutes. Pass with 80% and text your completion screen to (901) 295-0322 — a principal will mark you trained.</p>
+<p class="sub">Six short modules · 18 questions · ~15 minutes. Pass with 80% and send your result at the end — it lands in the NESO review queue and a principal marks you trained.</p>
 <div class="bar"><i id="prog"></i></div>
 <div id="app"></div>
 <script>
@@ -112,11 +119,63 @@ function finish(){
        +'<div class="nm" id="cname">Your name</div>'
        +'<input class="iname" placeholder="Type your name" oninput="document.getElementById(\'cname\').textContent=this.value||\'Your name\'">'
        +'<div class="muted" style="margin-top:10px">Completed '+new Date().toLocaleDateString()+' · Score '+pct+'%</div></div>'
-       +'<p><b>Last step:</b> screenshot this certificate and text it to <a href="sms:+19012950322">(901) 295-0322</a> — a NESO principal marks you trained and your portal goes fully live.</p>'
       :'<p>80% passes. Skim the modules once more — the answers are all in the lessons — and run it again.</p>')
+    +'<div class="send">'
+      +'<b style="font-size:14.5px">'+(pass?'Last step — tell NESO you passed':'Send your attempt anyway')+'</b>'
+      +'<div class="muted" style="margin:4px 0 2px">'+(pass
+          ?'This goes straight into the NESO review queue. A principal marks you trained and your portal goes fully live.'
+          :'Optional, but it tells a principal you are working through it — and they can help with whatever tripped you up.')+'</div>'
+      +'<label for="sname">Your name</label><input id="sname" autocomplete="name" placeholder="First and last">'
+      +'<label for="scontact">Email or mobile</label><input id="scontact" autocomplete="email" placeholder="you@company.com or (901) 555-0100">'
+      +'<button class="next" id="sbtn" onclick="sendResult('+pct+','+score+','+(pass?1:0)+')">Send my result</button>'
+      +'<div class="msg" id="smsg"></div>'
+    +'</div>'
     +'<button class="next" onclick="mi=0;qi=-1;score=0;done=0;render()">'+(pass?'Take it again for fun':'Retake the course')+'</button>'
     +'</div>';
   document.getElementById('prog').style.width='100%';
 }
+/* Results post to the NESO review queue. /submit is the same public endpoint the
+   intake and feedback forms use — no key, CORS open, nothing new to configure. */
+var QUEUE_SUBMIT = "https://neso-queue.nesoai-us.workers.dev/submit";
+
+function sendResult(pct, sc, pass){
+  var name = (document.getElementById('sname').value || '').trim();
+  var contact = (document.getElementById('scontact').value || '').trim();
+  var msg = document.getElementById('smsg'), btn = document.getElementById('sbtn');
+  if(!name || !contact){
+    msg.className = 'msg warn';
+    msg.textContent = 'Please add your name and either an email or a mobile number, so a principal knows who to mark.';
+    return;
+  }
+  btn.disabled = true; btn.textContent = 'Sending…';
+  var isEmail = contact.indexOf('@') > -1;
+  fetch(QUEUE_SUBMIT, {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ form: 'academy', fields: {
+      name: name,
+      email: isEmail ? contact : '',
+      phone: isEmail ? '' : contact,
+      result: pass ? 'PASSED' : 'did not pass',
+      score: sc + ' of ' + total + ' (' + pct + '%)',
+      completed: new Date().toISOString().slice(0,10)
+    }})
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(j){
+    if(!j || !j.ok) throw new Error('rejected');
+    btn.textContent = 'Sent';
+    msg.className = 'msg ok';
+    msg.textContent = pass
+      ? 'Sent. A NESO principal will mark you trained and confirm — usually the same business day.'
+      : 'Sent. A principal will follow up. Retake it whenever you are ready.';
+  })
+  .catch(function(){
+    btn.disabled = false; btn.textContent = 'Send my result';
+    msg.className = 'msg warn';
+    msg.innerHTML = 'Could not reach NESO just now. Screenshot this screen and text it to '
+      + '<a href="sms:+19012950322">(901) 295-0322</a> instead — nothing is lost.';
+  });
+}
+
 render();
 </script></body></html>
