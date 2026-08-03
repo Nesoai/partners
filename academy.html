@@ -72,7 +72,7 @@ var ATTEMPT = (function(){
     return n;
   } catch (e) { return 1; }
 })();
-var MISSED = [];
+var MISSED = [];   // module titles missed on THIS attempt
 
 var MODULES=[
 {t:"What NESO is",l:"NESO is a <b>two-principal advisory firm and toolmaker</b> covering two practices: <b>business</b> (plans, grants, research, decks) and <b>real estate &amp; land</b> (feasibility, capital stacks, entitlements, site work). Charles Finkley, MPA leads real estate; Mallory Bailey-Finkley, MBA built the NESO tools. Money is simple: services are priced in <b>credits — 1 credit = $50</b> — quoted up front, and work starts only after the client approves and pays. Credits stay valid <b>13 weeks</b> (39 weeks on Growth/Partner blocks or the $10 rollover membership). One more house rule you must never get wrong: the phone <b>(901) 295-0322 is TEXT-FIRST</b> — we work by text, email and forms so nothing gets missed. The line does answer, and it records a voicemail that reaches a principal. Never tell anyone we don't take calls.",
@@ -127,7 +127,10 @@ function pick(i){
   if(answered)return;answered=true;done++;
   var Q=MODULES[mi].q[qi];
   if(i===Q.a){score++;document.getElementById('o'+i).className='opt right';}
-  else{document.getElementById('o'+i).className='opt wrong';document.getElementById('o'+Q.a).className='opt right';}
+  else{document.getElementById('o'+i).className='opt wrong';document.getElementById('o'+Q.a).className='opt right';
+    /* Record WHICH MODULE the miss was in, not the question number. A principal
+       needs to know a partner is shaky on delivery terms, not that they missed Q11. */
+    var mt=MODULES[mi].t; if(MISSED.indexOf(mt)<0) MISSED.push(mt);}
   document.getElementById('why').style.display='block';
   document.getElementById('nx').disabled=false;prog();
 }
